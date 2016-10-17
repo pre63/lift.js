@@ -2,7 +2,7 @@
 Because it can always be shorter.
 
 ## Introduction
-lift.js is a compact monad opinionated javascript library. It implements Just, Maybe, Validation(Valid) and a nice Monad factory. The unit comes wotht he lift function so you can add functionnality later to your monad and event the builtin ones. It's ment to be flexible and shorter fucntion names. It's written with es6 so it's less than 100 lines.
+lift.js is a compact monad opinionated javascript library. It implements Just, Maybe, Validation(Valid) and a nice Monad factory. The unit comes with a lift function so you can add functionnality later in code to your monad. It's ment to be flexible and faster to use. It's written with es6 so it's less than 100 lines.
 
 ## Installation
 `lift.js` can be required directly for es next project or you can use the `lift-min.js` for all legacy applications.
@@ -137,7 +137,7 @@ The folowing function are available on all monads.
 
 ## Author
 
-Written and maintained by [@ore63](http://twitter.com/pre63).
+Written and maintained by [@pore63](http://twitter.com/pre63).
 
 Based on [Douglas Crockford MONAD](https://github.com/douglascrockford/monad/blob/master/monad.js).
 Special tanks to [Monet](https://github.com/cwmyers/monet.js) for the inspiration and a bunch of tests.
