@@ -1,8 +1,9 @@
 {
-  "name": "lift.js",
+  "name": "liftjs",
   "version": "1.0.0",
   "description": "lift.js is a compact monad opinionated javascript library",
   "tags": "monad, monoid, macroid, just, validation, maybe, unit, functional programming",
+  "main":"lift-min.js",
   "scripts": {
     "pretest": "babel lift.js -o test/lift.js",
     "test": "mocha --require babel-register --require babel-polyfill",
