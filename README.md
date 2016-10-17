@@ -138,6 +138,12 @@ The folowing function are available on all monads.
   // Just[5]
 ```
 
+## Links
+
+- [npm](https://www.npmjs.com/package/liftjs)
+- [@atomable](https://twitter.com/atomable)
+- [@pre63](http://twitter.com/pre63)
+
 ## Author
 
 Written and maintained by [@pre63](http://twitter.com/pre63).
