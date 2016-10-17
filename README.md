@@ -137,7 +137,9 @@ The folowing function are available on all monads.
 
 ## Author
 
-Written and maintained by [@pore63](http://twitter.com/pre63).
+Written and maintained by [@pre63](http://twitter.com/pre63).
+
+Sponsored by [@atomable](https://twitter.com/atomable).
 
 Based on [Douglas Crockford MONAD](https://github.com/douglascrockford/monad/blob/master/monad.js).
 Special tanks to [Monet](https://github.com/cwmyers/monet.js) for the inspiration and a bunch of tests.
