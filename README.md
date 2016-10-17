@@ -7,7 +7,10 @@ lift.js is a compact monad opinionated javascript library. It implements Just, M
 ## Installation
 `lift.js` can be required directly for es next project or you can use the `lift-min.js` for all legacy applications.
 
-npm: upcoming
+#### npm
+```
+npm install liftjs
+```
 
 ## lift (lifting)
 
