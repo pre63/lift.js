@@ -23,6 +23,12 @@ import lift from 'liftjs';
 import { Monad, Just, Maybe, Valid } from 'liftjs';
 ```
 
+
+## Monad
+```javascript
+Monad(modifier) : unit
+```
+
 ## lift (lifting)
 
 With the `lift` function you can add function at any time on the monads.
