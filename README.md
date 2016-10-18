@@ -52,7 +52,7 @@ person.compose().run(console.log);
 
 ## Just
 
-`Just` is an implementaion of the `Identity` monad. It's called `Just` becuse a 8 character variable is just too long.
+`Just` is an implementaion of the `Identity` monad. It's called `Just` because an 8 character variable is just too long.
 
 **The folowing function are available on `Just`, `Maybe`, `Valid`.**
 
@@ -179,7 +179,7 @@ const maybeWithValue = Maybe(5).orElse(Maybe(15));
 // Maybe[5]
 
 const maybeWithValue = Maybe().orElse(Just(15));
-// Just[5]
+// Just[15]
 ```
 
 ## Roadmap
