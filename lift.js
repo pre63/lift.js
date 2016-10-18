@@ -26,7 +26,8 @@ export const Monad = (modifier) => {
     monad.map = (func) => unit(func(value));
     monad.join = () => monad.bind(idFunction);
     monad.toMaybe = () => Maybe(value);
-    monad.run = (func) => run(value, func);
+    monad.run = (func) => { run(value, func); return monad; };
+
     if (isFunction(modifier)) {
       modifier(monad, value);
     }
@@ -60,6 +61,8 @@ export const Maybe = Monad((monad, value) => {
   monad.orSome = monad.orJust = (orValue) => valueIsNone ? orValue : value;
   monad.orElse = (orMonad) => valueIsNone ? orMonad : monad;
   monad.bind = valueIsNone ? () => monad : monad.bind;
+  const run = monad.run;
+  monad.run = (func) => { (valueIsNone ? () => { } : run)(value, func); return monad; };
 });
 
 const successFactory = (value) => Success(value);

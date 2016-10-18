@@ -15,7 +15,7 @@ describe('A lift', () => {
     justWithLog.log();
   });
 
-  it ('peron test', () => {
+  it('peron test', () => {
     const Person = Monad();
     const person = Person({ firstname: 'Bill', lastname: 'Murray' });
 
@@ -26,112 +26,129 @@ describe('A lift', () => {
   });
 });
 
-describe('Test just monad', () => {
-  it('test just.get, should be 11', () => {
+describe('A just', () => {
+  it('will be exactly 11', () => {
     const value = Just(11).get();
     should(value).be.exactly(11);
   });
 
-  it('test just.map, should be 12', () => {
+  it('will be exactly 12 when map is called', () => {
     const value = Just(11).map((value) => value + 1).get();
     should(value).be.exactly(12);
   });
 
-  it('test just.bind, shoud be 13', () => {
+  it('will be exactly 13 when bind is called', () => {
     const value = Just(12).bind((value) => Just(value + 1)).get();
     should(value).be.exactly(13);
   });
 
-  it('test just.chain, shoud be 12', () => {
+  it('will be exactly 12 when chain is called', () => {
     const value = Just(12).chain((value) => Just(value)).get();
     should(value).be.exactly(12);
   });
 
-  it('test just.flatMap, shoud be 12', () => {
+  it('will be exactly 12 after flatmap', () => {
     const value = Just(12).flatMap((value) => Just(value)).get();
     should(value).be.exactly(12);
   });
 
-  it('test just.of || pure, shoud be 12', () => {
+  it('just.of || pure, shoud be 12', () => {
     const value = Just(17).of(12).get();
     should(value).be.exactly(12);
   });
 
-  it('test just.join, shoud be 12', () => {
+  it('just.join, shoud be 12', () => {
     const value = Just(Just(12)).join().get();
     should(value).be.exactly(12);
   });
 });
 
-describe('Test Maybe monad', () => {
-  it('test Maybe.none, should be undefined', () => {
+describe('A Maybe', () => {
+  it('none should be Maybe()', () => {
     const value = Maybe(11).none();
     should(value).containEql(Maybe());
   });
 
-  it('test Maybe.map, should be undefined', () => {
+  it('when map, should be 124', () => {
     const value = Maybe(123).map((val) => val + 1).get();
     should(value).equal(124);
   });
 
-  it('test Maybe.isSome, should be true', () => {
+  it('when isSome, should be true', () => {
     const value = Maybe(123).isSome();
     should(value).be.true();
   });
 
-  it('test Maybe.isSome, should be false', () => {
+  it('when isSome, should be false', () => {
     const value = Maybe().isSome();
     should(value).be.false();
   });
 
-  it('test Maybe.isNone, should be false', () => {
+  it('when isNone, should be false', () => {
     const value = Maybe(123).isNone();
     should(value).be.false();
   });
 
-  it('test Maybe.isNone, should be true', () => {
+  it('when isNone, should be true', () => {
     const value = Maybe().isNone();
     should(value).be.true();
   });
 
-  it('test Maybe.orSone || orJust, should be 13', () => {
+  it('when orSone || orJust, should be 13', () => {
     const value = Maybe(13).orSome(15);
     should(value).equal(13);
   });
 
-  it('test Maybe.orSone || orJust, should be 15', () => {
+  it('when orSone || orJust, should be 15', () => {
     const value = Maybe().orSome(15);
     should(value).equal(15);
   });
 
-  it('test Maybe.orElse, should be 13', () => {
+  it('when orElse, should be 13', () => {
     const value = Maybe(13).orElse(Just(15));
     should(value).containEql(Maybe(13));
   });
 
-  it('test Maybe.orElse, should be 15', () => {
+  it('when orElse, should be 15', () => {
     const value = Maybe().orElse(Just(15));
     should(value).containEql(Just(15));
   });
+
+  it('will be exactly 13 when bind is called', () => {
+    should(Maybe(12).bind((value) => Maybe(value + 1)).get()).be.exactly(13);
+  });
+
+  it('that bind will not be called', () => {
+    should(Maybe().bind((value) => { throw 'not suppose to get here'; }));
+  });
+
+  it('will be exactly 12 when run is called', () => {
+    should(Maybe(12).run((value) => Maybe(value + 1)).get()).be.exactly(12);
+  });
+
+  it('that bind will not be called', () => {
+    should(Maybe().run((value) => { throw 'not suppose to get here'; }));
+  });
+
 });
 
-describe('Test Valid monad', () => {
-  it('test Valid.success', () => {
+describe('A Valid', () => {
+  it('when success, is called, isSuccess() should be true', () => {
     const value = Valid(456).success();
     should(value.isSuccess()).be.true();
   });
 
-  it('test Valid.isFail', () => {
+  it('when fail is called, isFail() should be true', () => {
     const value = Valid(456).fail();
     should(value.isFail()).be.true();
   });
 
-  it('test Valid.isFail', () => {
+  it('when fail, get should be undefined', () => {
     const value = Valid(456).fail();
     should(value.get()).be.equal(undefined);
   });
 
-  it('test Valid.ap', () => {
+  it('when ap should be false', () => {
     const value = Valid(456)
       .fail()
       .ap(Valid().fail());

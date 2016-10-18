@@ -55,8 +55,9 @@ var Monad = exports.Monad = function Monad(modifier) {
       return Maybe(value);
     };
     monad.run = function (func) {
-      return run(value, func);
+      run(value, func);return monad;
     };
+
     if (isFunction(modifier)) {
       modifier(monad, value);
     }
@@ -118,6 +119,10 @@ var Maybe = exports.Maybe = Monad(function (monad, value) {
   monad.bind = valueIsNone ? function () {
     return monad;
   } : monad.bind;
+  var run = monad.run;
+  monad.run = function (func) {
+    (valueIsNone ? function () {} : run)(value, func);return monad;
+  };
 });
 
 var successFactory = function successFactory(value) {
