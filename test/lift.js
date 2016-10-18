@@ -16,12 +16,16 @@ var idFunction = function idFunction(value) {
   return value;
 };
 
-var isSome = function isSome(value) {
-  return !isNone(value);
-};
-
 var isNone = function isNone(value) {
   return value === null || value === undefined;
+};
+
+var Curry = exports.Curry = function Curry(func) {
+  for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    args[_key - 1] = arguments[_key];
+  }
+
+  return args.length >= func.length ? func.apply(undefined, args) : Curry.bind.apply(Curry, [undefined, func].concat(args));
 };
 
 var Monad = exports.Monad = function Monad(modifier) {
@@ -71,8 +75,8 @@ var Monad = exports.Monad = function Monad(modifier) {
 
   unit.lift = function (name, func) {
     return apply(prototype, name, function () {
-      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
+      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
       }
 
       var m = prototype.bind(func, args);
@@ -82,8 +86,8 @@ var Monad = exports.Monad = function Monad(modifier) {
 
   unit.lift_value = function (name, func) {
     return apply(prototype, name, function () {
-      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
+      for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+        args[_key3] = arguments[_key3];
       }
 
       return prototype.bind(func, args);

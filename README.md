@@ -191,9 +191,9 @@ Below are the things that I actually plan on doing. Soon.
 - document `Valid`
 - document `lift_value` function
 - document `method` function
-- `ap` function just `Just` and `Maybe`
-- `curry` function
+- `ap` function just `Just` and `Maybe` & tests
 - 1 character alias for all methods that are more than 3 characters. Per example: `Just(5).b(v=> Just(v)).m(v => v * 2)`
+- tests for lift functions
 
 
 ## Links

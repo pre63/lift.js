@@ -2,9 +2,58 @@
 /* global module, Promise, describe, it */
 'use strict';
 
-import { Valid, Maybe, Just, Prom, Monad } from './lift';
+import { Valid, Maybe, Just, Prom, Monad, Curry } from './lift';
 import should from 'should';
 
+describe('A curry', () => {
+  it('should curry a function', () =>
+    should(Curry((a, b, c) => a + b + c)(1, 2, 3)).equal(6));
+
+  const add = (a, b, c) => a + b + c;
+  const multiply = (a, b) => a * b;
+
+  it('should return a function that works like original without curring', () =>
+    should(Curry(add)(1, 1, 1)).be.equal(add(1, 1, 1)));
+
+  it('should return a function that works like original without curring', () =>
+    should(Curry(multiply)(2, 2)).be.equal(multiply(2, 2)));
+
+  it('should return a curried function', () =>
+    should(Curry(add)(1)(1, 1)).be.equal(add(1, 1, 1)));
+
+  it('should return a curried function', () =>
+    should(Curry(add)(1)(2, 3)).be.equal(add(1, 2, 3)));
+
+  it('should return a curried function', () =>
+    should(Curry(add)(1, 2)(1)).be.equal(add(1, 2, 1)));
+
+  it('should return a curried function', () =>
+    should(Curry(add)(2)(1)(2)).be.equal(add(2, 1, 2)));
+
+  it('should return a curried function', () =>
+    should(Curry(multiply)(2)(3)).be.equal(multiply(2, 3)));
+
+  it('should provide a curried function with no more arguments', () =>
+    should(Curry(add)(1, 1, 1, 5, 22)).be.equal(add(1, 1, 1)));
+
+  it('should provide a curried function with no more arguments', () =>
+    should(Curry(add)(1)(1, 1, 3)).be.equal(add(1, 1, 1)));
+
+  it('should provide a curried function with no more arguments', () =>
+    should(Curry(add)(1)(2, 3, 5)).be.equal(add(1, 2, 3)));
+
+  it('should provide a curried function with no more arguments', () =>
+    should(Curry(add)(1, 2)(1, 1)).be.equal(add(1, 2, 1)));
+
+  it('should provide a curried function with no more arguments', () =>
+    should(Curry(add)(2)(1)(2, 3, 5, 7, 8)).be.equal(add(2, 1, 2)));
+
+  it('should provide a curried function with no more arguments', () =>
+    should(Curry(multiply)(2)(3, 22)).be.equal(multiply(2, 3)));
+
+  it('should provide a curried function with no more arguments', () =>
+    should(Curry(multiply)(2, 2, 3, 4)).be.equal(multiply(2, 2)));
+});
 
 describe('A lift', () => {
   it('should lift', () => {
@@ -54,6 +103,11 @@ describe('A just', () => {
 
   it('just.of || pure, shoud be 12', () => {
     const value = Just(17).of(12).get();
+    should(value).be.exactly(12);
+  });
+
+  it('just.of || pure, shoud be 12', () => {
+    const value = Just(17).of(Maybe(12)).get();
     should(value).be.exactly(12);
   });
 

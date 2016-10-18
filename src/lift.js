@@ -2,13 +2,13 @@
 /* global module */
 'use strict';
 
-const isFunction = (f) => !!(f && f.constructor && f.call && f.apply);
+const isFunction = f => !!(f && f.constructor && f.call && f.apply);
 
-const idFunction = (value) => value;
+const idFunction = value => value;
 
-const isSome = (value) => !isNone(value);
+const isNone = value => value === null || value === undefined;
 
-const isNone = (value) => value === null || value === undefined;
+export const Curry = (func, ...args) => args.length >= func.length ? func(...args) : Curry.bind(this, func, ...args);
 
 export const Monad = (modifier) => {
   const prototype = Object.create({ is_monad: true });

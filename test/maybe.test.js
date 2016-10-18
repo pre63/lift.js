@@ -24,6 +24,10 @@ describe('A Maybe', () => {
       should(someString.isNothing()).be.false();
     });
 
+    it('will return valid to Maybe', () => {
+      should(someString.toMaybe().isJust()).be.true();
+    });
+
     it('will be transformed by a bind', () =>
       should(someString.bind((val) => Maybe('Hello'))
         .get())
