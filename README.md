@@ -1,5 +1,5 @@
 # lift.js
-Because it can always be shorter.
+Write less code.
 
 ## Introduction
 lift.js is a compact monad opinionated javascript library. It implements Just (Identity), Maybe, Valid (Validation) and a nice Monad factory. The unit comes with a lift function so you can add functionnality later in code to your monad. It's ment to be flexible and faster to use. It's written with es6 so it's less than 100 lines.
@@ -39,9 +39,11 @@ person.compose().run(console.log);
 // console> Bill, Murray
 ```
 
-## All Monads
+## Just
 
-The folowing function are available on all monads.
+`Just` is an implementaion of the `Identity` monad. It's called `Just` becuse a 8 character variable is just too long.
+
+**The folowing function are available on `Just`, `Maybe`, `Valid`.**
 
 ### bind, alias: chain flatMap
 ```javascript
@@ -168,6 +170,20 @@ const maybeWithValue = Maybe(5).orElse(Maybe(15));
 const maybeWithValue = Maybe().orElse(Just(15));
 // Just[5]
 ```
+
+## Roadmap
+
+I don't plan on adding all the typical monads to the framework, if you feel one should be added you are welcome to make a pull request with the implementation. I'm thinking of Free, IO and List, but not sure yet. It will depend on what I use in my own projects.
+
+Below are the things that I actually plan on doing. Soon.
+
+- document `Valid`
+- document `lift_value` function
+- document `method` function
+- `ap` function just `Just` and `Maybe`
+- `curry` function
+- 1 character alias for all methods that are more than 3 characters. Per example: `Just(5).b(v=> Just(v)).m(v => v * 2)`
+
 
 ## Links
 

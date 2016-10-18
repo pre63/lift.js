@@ -1,6 +1,6 @@
 {
   "name": "liftjs",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "homepage": "https://github.com/atomable/lift.js/",
   "description": "lift.js is a compact monad opinionated javascript library",
   "tags": "monad, monoid, macroid, just, validation, maybe, unit, functional programming",
