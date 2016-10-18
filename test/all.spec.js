@@ -71,7 +71,7 @@ describe('A lift', () => {
     const FullName = Monad();
     Person.lift('compose', person => FullName(`${person.firstname}, ${person.lastname}`));
 
-    person.compose().run(console.log);
+    person.compose().run(value => should(value).equal('Bill, Murray'));
   });
 });
 
