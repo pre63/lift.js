@@ -62,10 +62,12 @@ export const Maybe = Monad((monad, value) => {
   monad.bind = valueIsNone ? () => monad : monad.bind;
 });
 
+const successFactory = (value) => Success(value);
+const failFactory = (value) => Fail(value);
+
 const validFunctions = (monad, value) => {
-  monad.success = monad.s = (value) => Success(value);
-  monad.fail = monad.f = (value) => Fail(value);
-  monad.of = (value) => Success(value);
+  monad.success = monad.s = successFactory;
+  monad.fail = monad.f = failFactory;
   monad.isSuccess = () => monad.isSuccessValue;
   monad.isFail = () => !monad.isSuccessValue;
   monad.ap =
@@ -90,4 +92,7 @@ const Fail = Monad((monad, value) => {
 export const Valid = Monad((monad, value) => {
   validFunctions(monad, value);
 });
+
+Valid.success = Valid.s = successFactory;
+Valid.fail = Valid.f = failFactory;
 

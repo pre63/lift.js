@@ -120,16 +120,16 @@ var Maybe = exports.Maybe = Monad(function (monad, value) {
   } : monad.bind;
 });
 
+var successFactory = function successFactory(value) {
+  return Success(value);
+};
+var failFactory = function failFactory(value) {
+  return Fail(value);
+};
+
 var validFunctions = function validFunctions(monad, value) {
-  monad.success = monad.s = function (value) {
-    return Success(value);
-  };
-  monad.fail = monad.f = function (value) {
-    return Fail(value);
-  };
-  monad.of = function (value) {
-    return Success(value);
-  };
+  monad.success = monad.s = successFactory;
+  monad.fail = monad.f = failFactory;
   monad.isSuccess = function () {
     return monad.isSuccessValue;
   };
@@ -156,3 +156,6 @@ var Fail = Monad(function (monad, value) {
 var Valid = exports.Valid = Monad(function (monad, value) {
   validFunctions(monad, value);
 });
+
+Valid.success = Valid.s = successFactory;
+Valid.fail = Valid.f = failFactory;

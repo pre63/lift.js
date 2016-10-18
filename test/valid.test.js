@@ -6,7 +6,7 @@ import { Valid } from './lift';
 import should from 'should';
 
 describe('A Validation', () => {
-  const successString = Valid().success("abcd");
+  const successString = Valid.success("abcd");
   const successMap = (val) => "success " + val;
 
   describe('that is successful', () => {
@@ -24,21 +24,21 @@ describe('A Validation', () => {
       should(successString.isFail()).be.false());
 
     it('will be transformed by a bind', () => {
-      should(successString.bind((val) => Valid().success("efgh"))
+      should(successString.bind((val) => Valid.success("efgh"))
         .get()).equal("efgh");
 
-      should(successString.bind((val) => Valid().fail("big fail")))
+      should(successString.bind((val) => Valid.fail("big fail")))
         .containEql(Valid().f("big fail"));
 
       should(successString.flatMap((val) => Valid().s("efgh"))
         .get()).equal("efgh");
 
-      should(successString.flatMap((val) => Valid().fail("big fail")))
+      should(successString.flatMap((val) => Valid.fail("big fail")))
         .containEql(Valid().f("big fail"));
     });
   });
 
-  const failString = Valid().fail("error dude");
+  const failString = Valid.fail("error dude");
   const failMap = (val) => "fail: " + val;
 
   describe('that is a failure', () => {
@@ -47,10 +47,10 @@ describe('A Validation', () => {
         .containEql(Valid().f("error dude")));
 
     it('will not be transformed by a bind', () => {
-      should(failString.bind((val) => Valid().fail("big fail")))
+      should(failString.bind((val) => Valid.fail("big fail")))
         .containEql(Valid().f("error dude"));
 
-      should(failString.flatMap((val) => Valid().fail("big fail")))
+      should(failString.flatMap((val) => Valid.fail("big fail")))
         .containEql(Valid().f("error dude"));
     });
 
