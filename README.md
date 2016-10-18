@@ -184,7 +184,7 @@ const maybeWithValue = Maybe().orElse(Just(15));
 
 ## Roadmap
 
-I don't plan on adding all the typical monads to the framework, if you feel one should be added you are welcome to make a pull request with the implementation. I'm thinking of Free, IO and List, but not sure yet. It will depend on what I use in my own projects.
+I don't plan on adding all the typical monads to the library, if you feel one should be added you are welcome to make a pull request or to fork. I'm thinking of Free, IO and List, but not sure yet. It will depend on what I use in my own projects.
 
 Below are the things that I actually plan on doing. Soon.
 
