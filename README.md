@@ -209,4 +209,5 @@ Written and maintained by [pre63](http://twitter.com/pre63).
 Sponsored by [atomable](https://atomable.io).
 
 Based on [Douglas Crockford MONAD](https://github.com/douglascrockford/monad/blob/master/monad.js).
+
 Special thanks to [Monet](https://github.com/cwmyers/monet.js) for the inspiration.
