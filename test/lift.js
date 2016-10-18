@@ -27,13 +27,14 @@ var isNone = function isNone(value) {
 var Monad = exports.Monad = function Monad(modifier) {
   var prototype = Object.create({ is_monad: true });
   var unit = function unit(value) {
-    var monad = Object.create(prototype);
     var run = function run(value, func, args) {
       return isFunction(func) ? func.apply(undefined, [value].concat(_toConsumableArray(args || []))) : monad;
     };
-    monad.bind = function (func, args) {
+    prototype.bind = function (func, args) {
       return run(value, func, args);
     };
+
+    var monad = Object.create(prototype);
     monad.of = monad.pure = function (value) {
       var m = run(value, function (value) {
         return value;
@@ -73,7 +74,7 @@ var Monad = exports.Monad = function Monad(modifier) {
         args[_key] = arguments[_key];
       }
 
-      var m = undefined.bind(func, args);
+      var m = prototype.bind(func, args);
       return m && m.is_monad ? m : unit(m);
     }, unit);
   };
@@ -84,7 +85,7 @@ var Monad = exports.Monad = function Monad(modifier) {
         args[_key2] = arguments[_key2];
       }
 
-      return undefined.bind(func, args);
+      return prototype.bind(func, args);
     }, unit);
   };
 

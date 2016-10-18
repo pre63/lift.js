@@ -13,9 +13,10 @@ const isNone = (value) => value === null || value === undefined;
 export const Monad = (modifier) => {
   const prototype = Object.create({ is_monad: true });
   const unit = (value) => {
-    const monad = Object.create(prototype);
     const run = (value, func, args) => isFunction(func) ? func(value, ...(args || [])) : monad;
-    monad.bind = (func, args) => run(value, func, args);
+    prototype.bind = (func, args) => run(value, func, args);
+
+    const monad = Object.create(prototype);
     monad.of = monad.pure = (value) => {
       const m = run(value, (value) => value);
       return m && m.is_monad ? m : unit(m);
@@ -38,11 +39,11 @@ export const Monad = (modifier) => {
   };
 
   unit.lift = (name, func) => apply(prototype, name, (...args) => {
-    const m = this.bind(func, args);
+    const m = prototype.bind(func, args);
     return (m && m.is_monad) ? m : unit(m);
   }, unit);
 
-  unit.lift_value = (name, func) => apply(prototype, name, (...args) => this.bind(func, args), unit);
+  unit.lift_value = (name, func) => apply(prototype, name, (...args) => prototype.bind(func, args), unit);
 
   unit.method = (name, func) => apply(prototype, name, func, unit);
 

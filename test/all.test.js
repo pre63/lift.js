@@ -5,6 +5,27 @@
 import { Valid, Maybe, Just, Prom, Monad } from './lift';
 import should from 'should';
 
+
+describe('A lift', () => {
+  it('should lift', () => {
+    const justWithLog = Just(5);
+
+    Just.lift('log', value => should(value).equal(5));
+
+    justWithLog.log();
+  });
+
+  it ('peron test', () => {
+    const Person = Monad();
+    const person = Person({ firstname: 'Bill', lastname: 'Murray' });
+
+    const FullName = Monad();
+    Person.lift('compose', person => FullName(`${person.firstname}, ${person.lastname}`));
+
+    person.compose().run(console.log);
+  });
+});
+
 describe('Test just monad', () => {
   it('test just.get, should be 11', () => {
     const value = Just(11).get();

@@ -2,22 +2,41 @@
 Because it can always be shorter.
 
 ## Introduction
-lift.js is a compact monad opinionated javascript library. It implements Just, Maybe, Validation(Valid) and a nice Monad factory. The unit comes with a lift function so you can add functionnality later in code to your monad. It's ment to be flexible and faster to use. It's written with es6 so it's less than 100 lines.
+lift.js is a compact monad opinionated javascript library. It implements Just (Identity), Maybe, Valid (Validation) and a nice Monad factory. The unit comes with a lift function so you can add functionnality later in code to your monad. It's ment to be flexible and faster to use. It's written with es6 so it's less than 100 lines.
 
 ## Installation
 `lift.js` can be required directly for es next project or you can use the `lift-min.js` for all legacy applications.
 
-#### npm
+#### [npm](https://www.npmjs.com/package/liftjs)
 ```
 npm install liftjs
 ```
 
 ## lift (lifting)
 
+With the `lift` function you can add function at any time on the monads.
+
 ```javascript
-  const justWithLog = Just(5).lift('log',console.log);
-  justWithValue.log();
+  lift(name, func);
+```
+```javascript
+  const justWithLog = Just(5);
+  Just.lift('log', value => should(value).equal(5));
+  justWithLog.log();
   // console> 5
+```
+
+You can also use it on your custom monads.
+
+```javascript
+    const Person = Monad();
+    const person = Person({ firstname: 'Bill', lastname: 'Murray' });
+
+    const FullName = Monad();
+    Person.lift('compose', person => FullName(`${person.firstname}, ${person.lastname}`));
+
+    person.compose().run(console.log);
+    // console> Bill, Murray
 ```
 
 ## All Monads
@@ -27,7 +46,8 @@ The folowing function are available on all monads.
 ### bind, alias: chain flatMap
 ```javascript
   bind(func, args)
-
+```
+```javascript
   const justWithValue = Just(5).bind((value)=> Just(value));
 
   // Just[5]
@@ -35,7 +55,8 @@ The folowing function are available on all monads.
 ### of, alias: pure
 ```javascript
   of(value)
-
+```
+```javascript
   const justWithValue = Just(5).of(6);
   // Just[6]
 
@@ -45,7 +66,8 @@ The folowing function are available on all monads.
 ### get
 ```javascript
   get()
-
+```
+```javascript
   const value = Just(5).get();
   //5
 ```
@@ -53,7 +75,8 @@ The folowing function are available on all monads.
 ### map
 ```javascript
   map(func)
-
+```
+```javascript
   const justWithValue = Just(7).map(value => value * 2);
   // Just[14]
 ```
@@ -61,14 +84,16 @@ The folowing function are available on all monads.
 ### join
 ```javascript
   join()
-
+```
+```javascript
   const justWithValue = Just(Just(5)).join()
   // Just[5]
 ```
 ### toMaybe
 ```javascript
   toMaybe()
-
+```
+```javascript
   const maybeWithValue = Just(5).toMaybe();
   // Maybe[5]
 ```
@@ -76,7 +101,8 @@ The folowing function are available on all monads.
 ### run
 ```javascript
   run(func)
-
+```
+```javascript
   Just(5).run(value => console.log(value));
   // console> 5
 ```
@@ -86,7 +112,8 @@ The folowing function are available on all monads.
 ### none, alias: nothing
 ```javascript
   none()
-
+```
+```javascript
   const maybeWithValue = Maybe().none()
   // Maybe[]
 
@@ -106,7 +133,8 @@ The folowing function are available on all monads.
 ### isNone, alias: isNothing
 ```javascript
   isNone()
-
+```
+```javascript
   const value = Maybe(5).isNone();
   // false
 ```
@@ -114,7 +142,8 @@ The folowing function are available on all monads.
 ### isJust, alias: orSome
 ```javascript
   isJust()
-
+```
+```javascript
   const value = Maybe(5).isJust();
   // true
 ```
@@ -122,7 +151,8 @@ The folowing function are available on all monads.
 ### orJust, alias: orSome
 ```javascript
   orJust()
-
+```
+```javascript
   const maybeWithValue = Maybe().orJust(15);
   // Maybe[15]
 ```
@@ -130,7 +160,8 @@ The folowing function are available on all monads.
 ### orElse
 ```javascript
   orElse(monad)
-
+```
+```javascript
   const maybeWithValue = Maybe(5).orElse(Maybe(15));
   // Maybe[5]
 
@@ -141,14 +172,14 @@ The folowing function are available on all monads.
 ## Links
 
 - [npm](https://www.npmjs.com/package/liftjs)
-- [@atomable](https://twitter.com/atomable)
+- [atomable](https://twitter.com/atomable)
 - [@pre63](http://twitter.com/pre63)
 
 ## Author
 
-Written and maintained by [@pre63](http://twitter.com/pre63).
+Written and maintained by [pre63](http://twitter.com/pre63).
 
-Sponsored by [@atomable](https://twitter.com/atomable).
+Sponsored by [atomable](https://atomable.io).
 
 Based on [Douglas Crockford MONAD](https://github.com/douglascrockford/monad/blob/master/monad.js).
-Special tanks to [Monet](https://github.com/cwmyers/monet.js) for the inspiration and a bunch of tests.
+Special thanks to [Monet](https://github.com/cwmyers/monet.js) for the inspiration.
