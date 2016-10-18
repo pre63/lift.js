@@ -17,26 +17,26 @@ npm install liftjs
 With the `lift` function you can add function at any time on the monads.
 
 ```javascript
-  lift(name, func);
+lift(name, func);
 ```
 ```javascript
-  const justWithLog = Just(5);
-  Just.lift('log', value => should(value).equal(5));
-  justWithLog.log();
-  // console> 5
+const justWithLog = Just(5);
+Just.lift('log', value => should(value).equal(5));
+justWithLog.log();
+// console> 5
 ```
 
 You can also use it on your custom monads.
 
 ```javascript
-    const Person = Monad();
-    const person = Person({ firstname: 'Bill', lastname: 'Murray' });
+const Person = Monad();
+const person = Person({ firstname: 'Bill', lastname: 'Murray' });
 
-    const FullName = Monad();
-    Person.lift('compose', person => FullName(`${person.firstname}, ${person.lastname}`));
+const FullName = Monad();
+Person.lift('compose', person => FullName(`${person.firstname}, ${person.lastname}`));
 
-    person.compose().run(console.log);
-    // console> Bill, Murray
+person.compose().run(console.log);
+// console> Bill, Murray
 ```
 
 ## All Monads
@@ -45,128 +45,128 @@ The folowing function are available on all monads.
 
 ### bind, alias: chain flatMap
 ```javascript
-  bind(func, args)
+bind(func, args)
 ```
 ```javascript
-  const justWithValue = Just(5).bind((value)=> Just(value));
+const justWithValue = Just(5).bind((value)=> Just(value));
 
-  // Just[5]
+// Just[5]
 ```
 ### of, alias: pure
 ```javascript
-  of(value)
+of(value)
 ```
 ```javascript
-  const justWithValue = Just(5).of(6);
-  // Just[6]
+const justWithValue = Just(5).of(6);
+// Just[6]
 
-  const justWithValue = Just(5).of(Just(6));
-  // Just[6]
+const justWithValue = Just(5).of(Just(6));
+// Just[6]
 ```
 ### get
 ```javascript
-  get()
+get()
 ```
 ```javascript
-  const value = Just(5).get();
-  //5
+const value = Just(5).get();
+//5
 ```
 
 ### map
 ```javascript
-  map(func)
+map(func)
 ```
 ```javascript
-  const justWithValue = Just(7).map(value => value * 2);
-  // Just[14]
+const justWithValue = Just(7).map(value => value * 2);
+// Just[14]
 ```
 
 ### join
 ```javascript
-  join()
+join()
 ```
 ```javascript
-  const justWithValue = Just(Just(5)).join()
-  // Just[5]
+const justWithValue = Just(Just(5)).join()
+// Just[5]
 ```
 ### toMaybe
 ```javascript
-  toMaybe()
+toMaybe()
 ```
 ```javascript
-  const maybeWithValue = Just(5).toMaybe();
-  // Maybe[5]
+const maybeWithValue = Just(5).toMaybe();
+// Maybe[5]
 ```
 
 ### run
 ```javascript
-  run(func)
+run(func)
 ```
 ```javascript
-  Just(5).run(value => console.log(value));
-  // console> 5
+Just(5).run(value => console.log(value));
+// console> 5
 ```
 
 ## Maybe
 
 ### none, alias: nothing
 ```javascript
-  none()
+none()
 ```
 ```javascript
-  const maybeWithValue = Maybe().none()
-  // Maybe[]
+const maybeWithValue = Maybe().none()
+// Maybe[]
 
-  const maybeWithValue = Maybe().nothing()
-  // Maybe[]
+const maybeWithValue = Maybe().nothing()
+// Maybe[]
 
-  const maybeWithValue = Maybe()
-  // Maybe[]
+const maybeWithValue = Maybe()
+// Maybe[]
 
-  const maybeWithValue = Maybe(undefined)
-  // Maybe[]
+const maybeWithValue = Maybe(undefined)
+// Maybe[]
 
-  const maybeWithValue = Maybe(null)
-  // Maybe[]
+const maybeWithValue = Maybe(null)
+// Maybe[]
 ```
 
 ### isNone, alias: isNothing
 ```javascript
-  isNone()
+isNone()
 ```
 ```javascript
-  const value = Maybe(5).isNone();
-  // false
+const value = Maybe(5).isNone();
+// false
 ```
 
 ### isJust, alias: orSome
 ```javascript
-  isJust()
+isJust()
 ```
 ```javascript
-  const value = Maybe(5).isJust();
-  // true
+const value = Maybe(5).isJust();
+// true
 ```
 
 ### orJust, alias: orSome
 ```javascript
-  orJust()
+orJust()
 ```
 ```javascript
-  const maybeWithValue = Maybe().orJust(15);
-  // Maybe[15]
+const maybeWithValue = Maybe().orJust(15);
+// Maybe[15]
 ```
 
 ### orElse
 ```javascript
-  orElse(monad)
+orElse(monad)
 ```
 ```javascript
-  const maybeWithValue = Maybe(5).orElse(Maybe(15));
-  // Maybe[5]
+const maybeWithValue = Maybe(5).orElse(Maybe(15));
+// Maybe[5]
 
-  const maybeWithValue = Maybe().orElse(Just(15));
-  // Just[5]
+const maybeWithValue = Maybe().orElse(Just(15));
+// Just[5]
 ```
 
 ## Links
