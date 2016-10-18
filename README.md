@@ -21,7 +21,7 @@ lift(name, func);
 ```
 ```javascript
 const justWithLog = Just(5);
-Just.lift('log', value => should(value).equal(5));
+Just.lift('log', console.log);
 justWithLog.log();
 // console> 5
 ```
