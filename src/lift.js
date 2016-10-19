@@ -2,13 +2,32 @@
 /* global module */
 'use strict';
 
-const isFunction = f => !!(f && f.constructor && f.call && f.apply);
+const isFunction =
+  func =>
+    !!(func && func.constructor && func.call && func.apply);
 
-const idFunction = value => value;
+const idFunction =
+  value =>
+    value;
 
-const isNone = value => value === null || value === undefined;
+const isNone =
+  value =>
+    value === null || value === undefined;
 
-export const Curry = (func, ...args) => args.length >= func.length ? func(...args) : Curry.bind(this, func, ...args);
+const recurse =
+  list =>
+    func =>
+      index =>
+        index > 0 && recurse(list)(func)(index - 1) || index < list.length && func(list[index]);
+
+export const loop =
+  list =>
+    func =>
+      recurse(list)(func)(list.length);
+
+export const Curry =
+  (func, ...args) =>
+    args.length >= func.length ? func(...args) : Curry.bind(this, func, ...args);
 
 export const Monad = (modifier) => {
   const prototype = Object.create({ is_monad: true });
@@ -18,7 +37,7 @@ export const Monad = (modifier) => {
 
     const monad = Object.create(prototype);
     monad.of = monad.pure = (value) => {
-      const m = run(value, (value) => value);
+      const m = run(value, idFunction);
       return m && m.is_monad ? m : unit(m);
     };
     monad.get = () => value;
