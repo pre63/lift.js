@@ -5,18 +5,6 @@
 import { Valid, Maybe, Just, Prom, Monad, Curry, loop } from './lift';
 import should from 'should';
 
-describe('A loop', () => {
-  it('should reurse through the list', () => {
-    const list = ['this', 'is', 'not', 'lisp', 'but', 'I', 'try'];
-    let index = -1;
-
-    loop(list)(value => {
-      index++;
-      should(value).equal(list[index]);
-    });
-  });
-});
-
 describe('A curry', () => {
   it('should curry a function', () =>
     should(Curry((a, b, c) => a + b + c)(1, 2, 3)).equal(6));

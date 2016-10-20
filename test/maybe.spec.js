@@ -11,7 +11,7 @@ describe('A Maybe', () => {
 
   describe('with a value', () => {
     it('will be transformed by a map', () =>
-      should(someString.map((val) => val.length).get()).equal(4));
+      should(someString.map(value => value.length).get()).equal(4));
 
     it('will be will true for isSome()', () =>
       should(someString.isSome()).be.true());
@@ -29,20 +29,25 @@ describe('A Maybe', () => {
     });
 
     it('will be transformed by a bind', () =>
-      should(someString.bind((val) => Maybe('Hello'))
+      should(someString.bind(value => Maybe('Hello'))
+        .get())
+        .equal('Hello'));
+
+    it('will be transformed by a map', () =>
+      should(someString.map(value => 'Hello')
         .get())
         .equal('Hello'));
 
     it('will be transformed by a flatMap', () =>
-      should(someString.flatMap((val) => Maybe('Hello'))
+      should(someString.flatMap(value => Maybe('Hello'))
         .get())
         .equal('Hello'));
 
     it('will be transformed to a none on bind that returns none', () => {
-      should(someString.bind((val) => Maybe()))
+      should(someString.bind(value => Maybe()))
         .containEql(Maybe());
 
-      should(someString.flatMap((val) => Maybe()))
+      should(someString.flatMap(value => Maybe()))
         .containEql(Maybe());
     });
 
@@ -69,6 +74,14 @@ describe('A Maybe', () => {
         .containEql(Maybe());
 
       should(none.flatMap(() => Maybe()))
+        .containEql(Maybe());
+    });
+
+    it('will always return a none on map', () => {
+      should(none.map(value => value))
+        .containEql(Maybe());
+
+      should(none.map(value => { throw 'should not get here'; }))
         .containEql(Maybe());
     });
 

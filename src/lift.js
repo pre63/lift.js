@@ -14,17 +14,6 @@ const isNone =
   value =>
     value === null || value === undefined;
 
-const recurse =
-  list =>
-    func =>
-      index =>
-        index > 0 && recurse(list)(func)(index - 1) || index < list.length && func(list[index]);
-
-export const loop =
-  list =>
-    func =>
-      recurse(list)(func)(list.length);
-
 export const Curry =
   (func, ...args) =>
     args.length >= func.length ? func(...args) : Curry.bind(this, func, ...args);
@@ -80,6 +69,7 @@ export const Maybe = Monad((monad, value) => {
   monad.orSome = monad.orJust = (orValue) => valueIsNone ? orValue : value;
   monad.orElse = (orMonad) => valueIsNone ? orMonad : monad;
   monad.bind = valueIsNone ? () => monad : monad.bind;
+  monad.map = valueIsNone ? () => monad : monad.map;
   const run = monad.run;
   monad.run = (func) => { (valueIsNone ? () => { } : run)(value, func); return monad; };
 });
