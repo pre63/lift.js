@@ -4,17 +4,19 @@
 lift.js is a compact monad opinionated javascript library. It implements `Just` (Identity), `Maybe`, `Valid` (Validation) and a nice `Monad` factory. The `unit` comes with a `lift` function so you can add functionnality later in code to your monad. It's ment to be flexible and simple to use. It's written with es6 so it's less than 100 lines.
 
 ## Installation
-#### [npm](https://www.npmjs.com/package/liftjs)
+### [npm](https://www.npmjs.com/package/liftjs)
 ```
 npm install liftjs
-
+```
+### [yarn](https://yarnpkg.com/)
+```
 yarn add liftjs
 ```
 
 ## Source code | fork | pull request | issues
 https://github.com/atomable/lift.js
 
-#### importing
+## Importing
 
 All the following work, pick your demon. `lift.js` can be required directly for es next project or you can use the `lift-min.js` for all legacy applications.
 
@@ -29,7 +31,7 @@ import { Monad, Just, Maybe, Valid } from 'liftjs';
 ```
 
 
-## Monad factory
+## Monad Factory
 ```
 Monad(modifier[monad, value]: null) : unit
 ```
@@ -48,7 +50,7 @@ two.double();
 
 ```
 
-## lift (lifting)
+## lift
 
 With the `lift` function you can add function at any time on the monads.
 
