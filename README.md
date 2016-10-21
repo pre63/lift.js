@@ -27,7 +27,7 @@ const lift = require('liftjs');
 
 import lift from 'liftjs';
 
-import { Monad, Just, Maybe, Valid } from 'liftjs';
+import { Monad, Just, Maybe, Valid, Curry } from 'liftjs';
 ```
 
 
@@ -54,8 +54,8 @@ two.double();
 
 With the `lift` function you can add function at any time on the monads.
 
-```javascript
-lift(name, func);
+```
+Monad[A].lift[name, func[A] : Monad[A]];
 ```
 ```javascript
 const justWithLog = Just(5);
@@ -116,7 +116,7 @@ const value = Just(5).get();
 
 ### map
 ```
-Monad[A].map(func[A] : B ) : Monad[B]
+Monad[A].map[func[A] : B ] : Monad[B]
 ```
 ```javascript
 const justWithValue = Just(7).map(value => value * 2);
@@ -125,7 +125,7 @@ const justWithValue = Just(7).map(value => value * 2);
 
 ### join
 ```
-Monad[Monad[A]].join() : Monad[A]
+Monad[Monad[A]].join[] : Monad[A]
 ```
 ```javascript
 const justWithValue = Just(Just(5)).join()
@@ -133,7 +133,7 @@ const justWithValue = Just(Just(5)).join()
 ```
 ### toMaybe
 ```
-Monad[A].toMaybe() : Maybe[A]
+Monad[A].toMaybe[] : Maybe[A]
 ```
 ```javascript
 const maybeWithValue = Just(5).toMaybe();
@@ -142,7 +142,7 @@ const maybeWithValue = Just(5).toMaybe();
 
 ### run
 ```
-Monad[A].run(func[A] : null): Monad[A]
+Monad[A].run[func[A] : null]: Monad[A]
 ```
 ```javascript
 Just(5).run(value => console.log(value));
@@ -171,7 +171,7 @@ const maybeWithoutValue = Maybe(null)
 
 ### isNothing, alias: n
 ```
-Maybe[A].isNothing() : boolean
+Maybe[A].isNothing[] : boolean
 ```
 ```javascript
 const value = Maybe(5).isNothing();
@@ -182,8 +182,8 @@ const value = Maybe(5).n();
 ```
 
 ### is, alias: i
-```javascript
-Maybe[A].is() : boolean
+```
+Maybe[A].is[] : boolean
 ```
 ```javascript
 const value = Maybe(5).is();
@@ -195,7 +195,7 @@ const value = Maybe(5).i();
 
 ### or, alias: o
 ```
-Maybe[A].or(B) : A or B
+Maybe[A].or[B] : A or B
 ```
 ```javascript
 const maybeWithValue = Maybe().or(15);
@@ -204,7 +204,7 @@ const maybeWithValue = Maybe().or(15);
 
 ### else, alias; e
 ```
-Maybe[A].else(Monad[B]) : Maybe[A] or Monad[B]
+Maybe[A].else[Monad[B]] : Maybe[A] or Monad[B]
 ```
 ```javascript
 const maybeWithValue = Maybe(5).else(Maybe(15));
@@ -212,6 +212,21 @@ const maybeWithValue = Maybe(5).else(Maybe(15));
 
 const maybeWithValue = Maybe().e(Just(15));
 // Just[15]
+```
+
+## Curry
+`Curry` is a factory that takes a function and returs a curried function.
+```
+Curry(func) : func
+```
+
+```javascript
+const curried = Curry((a, b) => a * b);
+curried(3)(6);
+// 18
+
+Curry((a, b, c) => a + b + c)(1, 2, 3)
+// 6
 ```
 
 ## Roadmap
