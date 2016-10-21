@@ -7,7 +7,12 @@ lift.js is a compact monad opinionated javascript library. It implements `Just` 
 #### [npm](https://www.npmjs.com/package/liftjs)
 ```
 npm install liftjs
+
+yarn add liftjs
 ```
+
+## Source code | fork | pull request | issues
+https://github.com/atomable/lift.js
 
 #### importing
 
@@ -24,9 +29,23 @@ import { Monad, Just, Maybe, Valid } from 'liftjs';
 ```
 
 
-## Monad
+## Monad factory
+```
+Monad(modifier[monad, value]: null) : unit
+```
 ```javascript
-Monad(modifier) : unit
+const Person = Monad();
+const person = Person({ firstname: 'Bill', lastname: 'Murray' });
+
+// with a modifier
+const doubleIt = Monad((monad, value) => {
+  monad.double = value * 2;
+});
+
+const two = doubleIt(2);
+two.double();
+// 4
+
 ```
 
 ## lift (lifting)
@@ -62,18 +81,19 @@ person.compose().run(console.log);
 
 **The folowing function are available on `Just`, `Maybe`, `Valid`.**
 
-### bind, alias: chain flatMap
-```javascript
-bind(func, args)
+### bind, alias: chain
+```
+Monad[A].bind[func[A] : Monad[B], args] : Monad[B]
 ```
 ```javascript
 const justWithValue = Just(5).bind((value)=> Just(value));
 
 // Just[5]
 ```
-### of, alias: pure
-```javascript
-of(value)
+
+### of
+```
+Monad[A].of[B] : Monad[B]
 ```
 ```javascript
 const justWithValue = Just(5).of(6);
@@ -82,18 +102,19 @@ const justWithValue = Just(5).of(6);
 const justWithValue = Just(5).of(Just(6));
 // Just[6]
 ```
+
 ### get
-```javascript
-get()
+```
+Monad[A].get[] : A
 ```
 ```javascript
 const value = Just(5).get();
-//5
+// 5
 ```
 
 ### map
-```javascript
-map(func)
+```
+Monad[A].map(func[A] : B ) : Monad[B]
 ```
 ```javascript
 const justWithValue = Just(7).map(value => value * 2);
@@ -101,16 +122,16 @@ const justWithValue = Just(7).map(value => value * 2);
 ```
 
 ### join
-```javascript
-join()
+```
+Monad[Monad[A]].join() : Monad[A]
 ```
 ```javascript
 const justWithValue = Just(Just(5)).join()
 // Just[5]
 ```
 ### toMaybe
-```javascript
-toMaybe()
+```
+Monad[A].toMaybe() : Maybe[A]
 ```
 ```javascript
 const maybeWithValue = Just(5).toMaybe();
@@ -118,8 +139,8 @@ const maybeWithValue = Just(5).toMaybe();
 ```
 
 ### run
-```javascript
-run(func)
+```
+Monad[A].run(func[A] : null): Monad[A]
 ```
 ```javascript
 Just(5).run(value => console.log(value));
@@ -128,63 +149,66 @@ Just(5).run(value => console.log(value));
 
 ## Maybe
 
-### none, alias: nothing
-```javascript
-none()
+###
+```
+Maybe(A) : Maybe[A]
 ```
 ```javascript
-const maybeWithValue = Maybe().none()
+const maybeWithoutValue = Maybe()
 // Maybe[]
 
-const maybeWithValue = Maybe().nothing()
+const maybeWithValue = Maybe(2)
+// Maybe[2]
+
+const maybeWithoutValue = Maybe(undefined)
 // Maybe[]
 
-const maybeWithValue = Maybe()
-// Maybe[]
-
-const maybeWithValue = Maybe(undefined)
-// Maybe[]
-
-const maybeWithValue = Maybe(null)
+const maybeWithoutValue = Maybe(null)
 // Maybe[]
 ```
 
-### isNone, alias: isNothing
-```javascript
-isNone()
+### isNothing, alias: n
+```
+Maybe[A].isNothing() : boolean
 ```
 ```javascript
-const value = Maybe(5).isNone();
+const value = Maybe(5).isNothing();
+// false
+
+const value = Maybe(5).n();
 // false
 ```
 
-### isJust, alias: orSome
+### is, alias: i
 ```javascript
-isJust()
+Maybe[A].is() : boolean
 ```
 ```javascript
-const value = Maybe(5).isJust();
+const value = Maybe(5).is();
+// true
+
+const value = Maybe(5).i();
 // true
 ```
 
-### orJust, alias: orSome
-```javascript
-orJust()
+### or, alias: o
+```
+Maybe[A].or(B) : A or B
 ```
 ```javascript
-const maybeWithValue = Maybe().orJust(15);
-// Maybe[15]
+const maybeWithValue = Maybe().or(15);
+// 15
 ```
 
-### orElse
-```javascript
-orElse(monad)
+### else, alias; e
+```
+Maybe[A].else(Monad[B]) : Maybe[A] or Monad[B]
 ```
 ```javascript
-const maybeWithValue = Maybe(5).orElse(Maybe(15));
+const maybeWithValue = Maybe(5).else(Maybe(15));
 // Maybe[5]
 
-const maybeWithValue = Maybe().orElse(Just(15));
+const maybeWithValue = Maybe().e(Just(15));
 // Just[15]
 ```
 
@@ -197,15 +221,18 @@ Below are the things that I actually plan on doing. Soon.
 - document `Valid`
 - document `lift_value` function
 - document `method` function
+- add List monad
 - `ap` function just `Just` and `Maybe` & tests
-- 1 character alias for all methods that are more than 3 characters. Per example: `Just(5).b(v=> Just(v)).m(v => v * 2)`
 - tests for lift functions
 
+
+## Change Log
+ - 1.2.0 : I've changed the Maybe api qute a bit, orSome, orElse, none, are replaced.
 
 ## Links
 
 - [npm](https://www.npmjs.com/package/liftjs)
-- [atomable](https://twitter.com/atomable)
+- [atomable](http://www.atomable.io)
 - [@pre63](http://twitter.com/pre63)
 
 ## Author

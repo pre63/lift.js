@@ -6,90 +6,90 @@ import { Maybe } from './lift';
 import should from 'should';
 
 describe('A Maybe', () => {
-  const someString = Maybe("abcd");
-  const none = Maybe().none();
+  const helloBill = Maybe("Hello Bill");
+  const nothing = Maybe();
 
   describe('with a value', () => {
     it('will be transformed by a map', () =>
-      should(someString.map(value => value.length).get()).equal(4));
+      should(helloBill.map(value => value.length).get()).equal(10));
 
-    it('will be will true for isSome()', () =>
-      should(someString.isSome()).be.true());
+    it('will be will true for is()', () =>
+      should(helloBill.is()).be.true());
 
-    it('will be will true for isJust()', () =>
-      should(someString.isJust()).be.true());
+    it('will be will true for is()', () =>
+      should(helloBill.is()).be.true());
 
-    it('will be false for isNone()', () => {
-      should(someString.isNone()).be.false();
-      should(someString.isNothing()).be.false();
+    it('will be false for isNothing()', () => {
+      should(helloBill.isNothing()).be.false();
+      should(helloBill.isNothing()).be.false();
     });
 
     it('will return valid to Maybe', () => {
-      should(someString.toMaybe().isJust()).be.true();
+      should(helloBill.toMaybe().is()).be.true();
     });
 
     it('will be transformed by a bind', () =>
-      should(someString.bind(value => Maybe('Hello'))
+      should(helloBill.bind(value => Maybe('Hello'))
         .get())
         .equal('Hello'));
 
     it('will be transformed by a map', () =>
-      should(someString.map(value => 'Hello')
+      should(helloBill.map(value => 'Hello')
         .get())
         .equal('Hello'));
 
-    it('will be transformed by a flatMap', () =>
-      should(someString.flatMap(value => Maybe('Hello'))
+    it('will be transformed by a c', () =>
+      should(helloBill.c(value => Maybe('Hello'))
         .get())
         .equal('Hello'));
 
     it('will be transformed to a none on bind that returns none', () => {
-      should(someString.bind(value => Maybe()))
+      should(helloBill.bind(value => Maybe()))
         .containEql(Maybe());
 
-      should(someString.flatMap(value => Maybe()))
+      should(helloBill.c(value => Maybe()))
         .containEql(Maybe());
     });
 
-    it('will return the value when orSome() is called', () => {
-      should(someString.orSome('no no!')).equal('abcd');
-      should(someString.orJust('no no!')).equal('abcd');
+    it('will return the value when or() is called', () => {
+      should(helloBill.or('no no!')).equal('Hello Bill');
+      should(helloBill.or('no no!')).equal('Hello Bill');
     });
 
-    it('will return the first monad on orElse', () =>
-      should(someString.orElse(none).get()).equal("abcd"));
+    it('will return the first monad on else', () =>
+      should(helloBill.else(nothing).get()).equal("Hello Bill"));
   });
 
   describe('without a value', () => {
-    it('will be true for isNone()', () => {
-      should(none.isNone()).be.true();
-      should(none.isNothing()).be.true();
+    it('will be true for isNothing()', () => {
+      should(nothing.isNothing()).be.true();
+      should(nothing.isNothing()).be.true();
     });
 
-    it('will be false for isSome()', () =>
-      should(none.isSome()).be.false());
+    it('will be false for is()', () =>
+      should(nothing.is()).be.false());
 
     it('will always return a none on bind', () => {
-      should(none.bind(() => Maybe()))
+      should(nothing.bind(() => Maybe()))
         .containEql(Maybe());
 
-      should(none.flatMap(() => Maybe()))
+      should(nothing.c(() => Maybe()))
         .containEql(Maybe());
     });
 
     it('will always return a none on map', () => {
-      should(none.map(value => value))
+      should(nothing.map(value => value))
         .containEql(Maybe());
 
-      should(none.map(value => { throw 'should not get here'; }))
+      should(nothing.map(value => { throw 'should not get here'; }))
         .containEql(Maybe());
     });
 
-    it('will return the other value when orSome() is called', () =>
-      should(none.orSome('yep')).equal('yep'));
+    it('will return the other value when or() is called', () =>
+      should(nothing.or('yep')).equal('yep'));
 
-    it('will return the supplied monad on orElse', () =>
-      should(none.orElse(someString).get()).equal('abcd'));
+    it('will return the supplied monad on else', () =>
+      should(nothing.else(helloBill).get()).equal('Hello Bill'));
   });
 
   const person = ((forename, surname, address) => forename + " " + surname + " lives at " + address);
@@ -105,7 +105,7 @@ describe('A Maybe', () => {
         .equal("hello"));
 
     it("'chain'", () => {
-      should(Maybe().of("hello")
+      should(Maybe('a').of("hello")
         .chain((a) => Maybe().of(a + " world"))
         .get()).equal("hello world");
 

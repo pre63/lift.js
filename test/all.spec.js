@@ -96,8 +96,8 @@ describe('A just', () => {
     should(value).be.exactly(12);
   });
 
-  it('will be exactly 12 after flatmap', () => {
-    const value = Just(12).flatMap((value) => Just(value)).get();
+  it('will be exactly 12 after c', () => {
+    const value = Just(12).c((value) => Just(value)).get();
     should(value).be.exactly(12);
   });
 
@@ -118,8 +118,8 @@ describe('A just', () => {
 });
 
 describe('A Maybe', () => {
-  it('none should be Maybe()', () => {
-    const value = Maybe(11).none();
+  it('Maybe() should be Maybe()', () => {
+    const value = Maybe();
     should(value).containEql(Maybe());
   });
 
@@ -128,43 +128,43 @@ describe('A Maybe', () => {
     should(value).equal(124);
   });
 
-  it('when isSome, should be true', () => {
-    const value = Maybe(123).isSome();
+  it('when is, should be true', () => {
+    const value = Maybe(123).is();
     should(value).be.true();
   });
 
-  it('when isSome, should be false', () => {
-    const value = Maybe().isSome();
+  it('when is, should be false', () => {
+    const value = Maybe().is();
     should(value).be.false();
   });
 
-  it('when isNone, should be false', () => {
-    const value = Maybe(123).isNone();
+  it('when isNothing, should be false', () => {
+    const value = Maybe(123).isNothing();
     should(value).be.false();
   });
 
-  it('when isNone, should be true', () => {
-    const value = Maybe().isNone();
+  it('when isNothing, should be true', () => {
+    const value = Maybe().isNothing();
     should(value).be.true();
   });
 
-  it('when orSone || orJust, should be 13', () => {
-    const value = Maybe(13).orSome(15);
+  it('when or should be 13', () => {
+    const value = Maybe(13).or(15);
     should(value).equal(13);
   });
 
-  it('when orSone || orJust, should be 15', () => {
-    const value = Maybe().orSome(15);
+  it('when or, should be 15', () => {
+    const value = Maybe().or(15);
     should(value).equal(15);
   });
 
-  it('when orElse, should be 13', () => {
-    const value = Maybe(13).orElse(Just(15));
+  it('when else, should be 13', () => {
+    const value = Maybe(13).else(Just(15));
     should(value).containEql(Maybe(13));
   });
 
-  it('when orElse, should be 15', () => {
-    const value = Maybe().orElse(Just(15));
+  it('when else, should be 15', () => {
+    const value = Maybe().else(Just(15));
     should(value).containEql(Just(15));
   });
 

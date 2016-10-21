@@ -30,10 +30,10 @@ describe('A Validation', () => {
       should(successString.bind((val) => Valid.fail("big fail")))
         .containEql(Valid().f("big fail"));
 
-      should(successString.flatMap((val) => Valid().s("efgh"))
+      should(successString.chain((val) => Valid().s("efgh"))
         .get()).equal("efgh");
 
-      should(successString.flatMap((val) => Valid.fail("big fail")))
+      should(successString.chain((val) => Valid.fail("big fail")))
         .containEql(Valid().f("big fail"));
     });
   });
@@ -50,7 +50,7 @@ describe('A Validation', () => {
       should(failString.bind((val) => Valid.fail("big fail")))
         .containEql(Valid().f("error dude"));
 
-      should(failString.flatMap((val) => Valid.fail("big fail")))
+      should(failString.chain((val) => Valid.fail("big fail")))
         .containEql(Valid().f("error dude"));
     });
 
