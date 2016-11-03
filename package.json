@@ -6,9 +6,9 @@
   "tags": "monad, monoid, macroid, just, validation, maybe, unit, functional programming",
   "main": "npm/lift-min.js",
   "scripts": {
-    "pretest": "babel ./src/lift.js -o ./test/lift.js",
+    "pretest": "node scripts/compile",
     "test": "mocha --require babel-register --require babel-polyfill",
-    "prepublish": "node scripts/prepublish",
+    "prepublish": "node scripts/compile",
     "coverage": "babel src/lift.js -o test/lift.js && babel test --out-dir babel && istanbul cover node_modules/mocha/bin/_mocha babel"
   },
   "author": "pre63",
