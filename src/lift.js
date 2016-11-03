@@ -1,7 +1,3 @@
-/* jshint -W097, esversion: 6, strict: true, node: true */
-/* global module */
-'use strict';
-
 const isFunction =
   func =>
     !!(func && func.constructor && func.call && func.apply);
