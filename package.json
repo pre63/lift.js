@@ -7,9 +7,10 @@
   "main": "npm/lift-min.js",
   "scripts": {
     "pretest": "node scripts/compile",
-    "test": "mocha --require babel-register --require babel-polyfill",
+    "mocha": "mocha --require babel-register --require babel-polyfill",
     "prepublish": "node scripts/compile",
-    "coverage": "babel src/lift.js -o test/lift.js && babel test --out-dir babel && istanbul cover node_modules/mocha/bin/_mocha babel"
+    "test": "eslint . && babel test --out-dir babel && istanbul cover node_modules/mocha/bin/_mocha babel",
+    "lint": "eslint ."
   },
   "author": "pre63",
   "license": "MIT",
@@ -24,7 +25,12 @@
     "babel-register": "^6.16.3",
     "istanbul": "^0.4.5",
     "mocha": "^3.1.2",
-    "should": "^11.1.1"
+    "should": "^11.1.1",
+    "eslint": "3.9.1",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.1.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.6.0"
   },
   "bugs": {
     "url": "https://github.com/atomable/lift.js/issues"

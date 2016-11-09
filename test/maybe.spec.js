@@ -1,12 +1,10 @@
-/* jshint -W097, esversion: 6, strict: true, node: true */
-/* global module, describe, it */
-'use strict';
+/* global describe, it */
 
-import { Maybe } from './lift';
-import should from 'should';
+import { Maybe } from '../dist/lift';
+import should from 'should'; // eslint-disable-line
 
 describe('A Maybe', () => {
-  const helloBill = Maybe("Hello Bill");
+  const helloBill = Maybe('Hello Bill');
   const nothing = Maybe();
 
   describe('with a value', () => {
@@ -29,25 +27,25 @@ describe('A Maybe', () => {
     });
 
     it('will be transformed by a bind', () =>
-      should(helloBill.bind(value => Maybe('Hello'))
+      should(helloBill.bind(() => Maybe('Hello'))
         .get())
         .equal('Hello'));
 
     it('will be transformed by a map', () =>
-      should(helloBill.map(value => 'Hello')
+      should(helloBill.map(() => 'Hello')
         .get())
         .equal('Hello'));
 
     it('will be transformed by a c', () =>
-      should(helloBill.c(value => Maybe('Hello'))
+      should(helloBill.c(() => Maybe('Hello'))
         .get())
         .equal('Hello'));
 
     it('will be transformed to a none on bind that returns none', () => {
-      should(helloBill.bind(value => Maybe()))
+      should(helloBill.bind(() => Maybe()))
         .containEql(Maybe());
 
-      should(helloBill.c(value => Maybe()))
+      should(helloBill.c(() => Maybe()))
         .containEql(Maybe());
     });
 
@@ -57,7 +55,7 @@ describe('A Maybe', () => {
     });
 
     it('will return the first monad on else', () =>
-      should(helloBill.else(nothing).get()).equal("Hello Bill"));
+      should(helloBill.else(nothing).get()).equal('Hello Bill'));
   });
 
   describe('without a value', () => {
@@ -81,7 +79,7 @@ describe('A Maybe', () => {
       should(nothing.map(value => value))
         .containEql(Maybe());
 
-      should(nothing.map(value => { throw 'should not get here'; }))
+      should(nothing.map(() => { throw 'should not get here'; })) // eslint-disable-line
         .containEql(Maybe());
     });
 
@@ -92,26 +90,20 @@ describe('A Maybe', () => {
       should(nothing.else(helloBill).get()).equal('Hello Bill'));
   });
 
-  const person = ((forename, surname, address) => forename + " " + surname + " lives at " + address);
-
-  const maybeAddress = Maybe('Hollywood');
-  const maybeSurname = Maybe('Murray');
-  const maybeForename = Maybe('Bill');
-
-  describe("complies with FantasyLand spec for", () => {
+  describe('complies with FantasyLand spec for', () => {
     it("'of'", () =>
-      should(Maybe().of("hello")
+      should(Maybe().of('hello')
         .get())
-        .equal("hello"));
+        .equal('hello'));
 
     it("'chain'", () => {
-      should(Maybe('a').of("hello")
-        .chain((a) => Maybe().of(a + " world"))
-        .get()).equal("hello world");
+      should(Maybe('a').of('hello')
+        .chain(a => Maybe().of(`${a} world`))
+        .get()).equal('hello world');
 
       should(Maybe()
-        .chain((a) => Maybe().of(a + " world")))
-        .containEql(Maybe("hello world"));
+        .chain(a => Maybe().of(`${a} world`)))
+        .containEql(Maybe('hello world'));
     });
   });
 });
