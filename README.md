@@ -1,3 +1,5 @@
+[![atomable](https://img.shields.io/badge/atomable.io--blue.svg)](http://atomable.io)
+[![Build Status](https://travis-ci.org/atomable/lift.js.svg?branch=master)](https://travis-ci.org/atomable/lift.js)
 # lift.js — Write less code.
 
 ## Introduction
