@@ -1,10 +1,10 @@
 {
   "name": "liftjs",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "homepage": "https://github.com/atomable/lift.js/",
   "description": "lift.js is a compact monad opinionated javascript library",
   "tags": "monad, monoid, macroid, just, validation, maybe, unit, functional programming",
-  "main": "npm/lift-min.js",
+  "main": "dist/lift.js",
   "scripts": {
     "pretest": "node scripts/compile",
     "mocha": "mocha --require babel-register --require babel-polyfill",
