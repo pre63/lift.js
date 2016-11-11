@@ -205,14 +205,14 @@ Below are the things that I actually plan on doing. Soon.
 ## Links
 
 - [npm](https://www.npmjs.com/package/liftjs)
-- [atomable](https://twitter.com/atomable)
+- [atomable](https://github.com/atomable/atomable)
 - [@pre63](http://twitter.com/pre63)
 
 ## Author
 
 Written and maintained by [pre63](http://twitter.com/pre63).
 
-Sponsored by [atomable](https://atomable.io).
+Sponsored by [atomable](https://github.com/atomable/atomable).
 
 Based on [Douglas Crockford MONAD](https://github.com/douglascrockford/monad/blob/master/monad.js).
 
