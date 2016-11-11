@@ -3,6 +3,10 @@
 test
 .npmignore
 src
+babel
+coverage
+test
+scripts
 
 # Logs
 logs

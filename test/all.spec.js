@@ -1,21 +1,7 @@
-/* jshint -W097, esversion: 6, strict: true, node: true */
-/* global module, Promise, describe, it */
-'use strict';
+/* global describe, it */
 
-import { Valid, Maybe, Just, Prom, Monad, Curry, loop } from './lift';
-import should from 'should';
-
-describe('A loop', () => {
-  it('should reurse through the list', () => {
-    const list = ['this', 'is', 'not', 'lisp', 'but', 'I', 'try'];
-    let index = -1;
-
-    loop(list)(value => {
-      index++;
-      should(value).equal(list[index]);
-    });
-  });
-});
+import { Valid, Maybe, Just, Monad, Curry } from '../dist/lift';
+import should from 'should'; // eslint-disable-line
 
 describe('A curry', () => {
   it('should curry a function', () =>
@@ -94,22 +80,22 @@ describe('A just', () => {
   });
 
   it('will be exactly 12 when map is called', () => {
-    const value = Just(11).map((value) => value + 1).get();
+    const value = Just(11).map(value => value + 1).get();
     should(value).be.exactly(12);
   });
 
   it('will be exactly 13 when bind is called', () => {
-    const value = Just(12).bind((value) => Just(value + 1)).get();
+    const value = Just(12).bind(value => Just(value + 1)).get();
     should(value).be.exactly(13);
   });
 
   it('will be exactly 12 when chain is called', () => {
-    const value = Just(12).chain((value) => Just(value)).get();
+    const value = Just(12).chain(value => Just(value)).get();
     should(value).be.exactly(12);
   });
 
-  it('will be exactly 12 after flatmap', () => {
-    const value = Just(12).flatMap((value) => Just(value)).get();
+  it('will be exactly 12 after c', () => {
+    const value = Just(12).c(value => Just(value)).get();
     should(value).be.exactly(12);
   });
 
@@ -130,72 +116,71 @@ describe('A just', () => {
 });
 
 describe('A Maybe', () => {
-  it('none should be Maybe()', () => {
-    const value = Maybe(11).none();
+  it('Maybe() should be Maybe()', () => {
+    const value = Maybe();
     should(value).containEql(Maybe());
   });
 
   it('when map, should be 124', () => {
-    const value = Maybe(123).map((val) => val + 1).get();
+    const value = Maybe(123).map(val => val + 1).get();
     should(value).equal(124);
   });
 
-  it('when isSome, should be true', () => {
-    const value = Maybe(123).isSome();
+  it('when is, should be true', () => {
+    const value = Maybe(123).is();
     should(value).be.true();
   });
 
-  it('when isSome, should be false', () => {
-    const value = Maybe().isSome();
+  it('when is, should be false', () => {
+    const value = Maybe().is();
     should(value).be.false();
   });
 
-  it('when isNone, should be false', () => {
-    const value = Maybe(123).isNone();
+  it('when isNothing, should be false', () => {
+    const value = Maybe(123).isNothing();
     should(value).be.false();
   });
 
-  it('when isNone, should be true', () => {
-    const value = Maybe().isNone();
+  it('when isNothing, should be true', () => {
+    const value = Maybe().isNothing();
     should(value).be.true();
   });
 
-  it('when orSone || orJust, should be 13', () => {
-    const value = Maybe(13).orSome(15);
+  it('when or should be 13', () => {
+    const value = Maybe(13).or(15);
     should(value).equal(13);
   });
 
-  it('when orSone || orJust, should be 15', () => {
-    const value = Maybe().orSome(15);
+  it('when or, should be 15', () => {
+    const value = Maybe().or(15);
     should(value).equal(15);
   });
 
-  it('when orElse, should be 13', () => {
-    const value = Maybe(13).orElse(Just(15));
+  it('when else, should be 13', () => {
+    const value = Maybe(13).else(Just(15));
     should(value).containEql(Maybe(13));
   });
 
-  it('when orElse, should be 15', () => {
-    const value = Maybe().orElse(Just(15));
+  it('when else, should be 15', () => {
+    const value = Maybe().else(Just(15));
     should(value).containEql(Just(15));
   });
 
   it('will be exactly 13 when bind is called', () => {
-    should(Maybe(12).bind((value) => Maybe(value + 1)).get()).be.exactly(13);
+    should(Maybe(12).bind(value => Maybe(value + 1)).get()).be.exactly(13);
   });
 
   it('that bind will not be called', () => {
-    should(Maybe().bind((value) => { throw 'not suppose to get here'; }));
+    should(Maybe().bind(() => { throw 'not suppose to get here'; })); // eslint-disable-line
   });
 
   it('will be exactly 12 when run is called', () => {
-    should(Maybe(12).run((value) => Maybe(value + 1)).get()).be.exactly(12);
+    should(Maybe(12).run(value => Maybe(value + 1)).get()).be.exactly(12);
   });
 
   it('that bind will not be called', () => {
-    should(Maybe().run((value) => { throw 'not suppose to get here'; }));
+    should(Maybe().run(() => { throw 'not suppose to get here'; })); // eslint-disable-line
   });
-
 });
 
 describe('A Valid', () => {
