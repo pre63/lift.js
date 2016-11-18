@@ -6,11 +6,12 @@
   "tags": "monad, monoid, macroid, just, validation, maybe, unit, functional programming",
   "main": "dist/lift.js",
   "scripts": {
+    "prestart": "node scripts/compile",
+    "start": "mocha --require babel-register --require babel-polyfill",
     "pretest": "node scripts/compile",
-    "mocha": "mocha --require babel-register --require babel-polyfill",
-    "prepublish": "node scripts/compile",
     "test": "eslint . && babel test --out-dir babel && istanbul cover node_modules/mocha/bin/_mocha babel",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prepublish": "node scripts/compile"
   },
   "author": "pre63",
   "license": "MIT",

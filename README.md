@@ -216,6 +216,29 @@ const maybeWithValue = Maybe().e(Just(15));
 // Just[15]
 ```
 
+## IO
+
+###
+```
+IO(func[A]: B) : func[A] : IO[B]
+```
+```javascript
+const appleIO = IO((num) => num + ' apple');
+appleIO(4);
+appleIO.run();
+// apple
+
+const randomIO = IO(() => Math.random());
+randomIO()
+  .run();
+// 0.12701886093193782
+
+const writeFile  = IO((file, contents) =>  fs.writeFileSync(file, contents, 'UTF-8'));
+randomIO('/file.json', JSON.strigify({ monads : 'are awesome' }));
+  .run();
+// file is written to disk sync
+```
+
 ## Curry
 `Curry` is a factory that takes a function and returs a curried function.
 ```
@@ -233,7 +256,7 @@ Curry((a, b, c) => a + b + c)(1, 2, 3)
 
 ## Roadmap
 
-I don't plan on adding all the typical monads to the library, if you feel one should be added you are welcome to make a pull request or to fork. I'm thinking of Free, IO and List, but not sure yet. It will depend on what I use in my own projects.
+I don't plan on adding all the typical monads to the library, if you feel one should be added you are welcome to make a pull request or to fork. I'm thinking of Free and List, but not sure yet. It will depend on what I use in my own projects.
 
 Below are the things that I actually plan on doing. Soon.
 

@@ -106,3 +106,10 @@ export const Valid = Monad((monad, value) => {
 Valid.success = Valid.s = successFactory;
 Valid.fail = Valid.f = failFactory;
 
+export const IO =
+  func =>
+    (...args) =>
+      Monad((monad, value) => {
+        monad.run = () => value(...args);
+      })(func);
+
