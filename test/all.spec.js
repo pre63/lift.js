@@ -75,42 +75,42 @@ describe('A lift', () => {
 
 describe('A just', () => {
   it('will be exactly 11', () => {
-    const value = Just(11).get();
+    const value = Just(11).fold();
     should(value).be.exactly(11);
   });
 
   it('will be exactly 12 when map is called', () => {
-    const value = Just(11).map(value => value + 1).get();
+    const value = Just(11).map(value => value + 1).fold();
     should(value).be.exactly(12);
   });
 
   it('will be exactly 13 when bind is called', () => {
-    const value = Just(12).bind(value => Just(value + 1)).get();
+    const value = Just(12).bind(value => Just(value + 1)).fold();
     should(value).be.exactly(13);
   });
 
   it('will be exactly 12 when chain is called', () => {
-    const value = Just(12).chain(value => Just(value)).get();
+    const value = Just(12).chain(value => Just(value)).fold();
     should(value).be.exactly(12);
   });
 
-  it('will be exactly 12 after c', () => {
-    const value = Just(12).c(value => Just(value)).get();
-    should(value).be.exactly(12);
-  });
-
-  it('just.of || pure, shoud be 12', () => {
-    const value = Just(17).of(12).get();
+  it('will be exactly 12 after chain', () => {
+    const value = Just(12).chain(value => Just(value)).fold();
     should(value).be.exactly(12);
   });
 
   it('just.of || pure, shoud be 12', () => {
-    const value = Just(17).of(Maybe(12)).get();
+    const value = Just(17).of(12).fold();
+    should(value).be.exactly(12);
+  });
+
+  it('just.of || pure, shoud be 12', () => {
+    const value = Just(17).of(Maybe(12)).fold();
     should(value).be.exactly(12);
   });
 
   it('just.join, shoud be 12', () => {
-    const value = Just(Just(12)).join().get();
+    const value = Just(Just(12)).join().fold();
     should(value).be.exactly(12);
   });
 });
@@ -122,7 +122,7 @@ describe('A Maybe', () => {
   });
 
   it('when map, should be 124', () => {
-    const value = Maybe(123).map(val => val + 1).get();
+    const value = Maybe(123).map(val => val + 1).fold();
     should(value).equal(124);
   });
 
@@ -167,7 +167,7 @@ describe('A Maybe', () => {
   });
 
   it('will be exactly 13 when bind is called', () => {
-    should(Maybe(12).bind(value => Maybe(value + 1)).get()).be.exactly(13);
+    should(Maybe(12).bind(value => Maybe(value + 1)).fold()).be.exactly(13);
   });
 
   it('that bind will not be called', () => {
@@ -175,7 +175,7 @@ describe('A Maybe', () => {
   });
 
   it('will be exactly 12 when run is called', () => {
-    should(Maybe(12).run(value => Maybe(value + 1)).get()).be.exactly(12);
+    should(Maybe(12).run(value => Maybe(value + 1)).fold()).be.exactly(12);
   });
 
   it('that bind will not be called', () => {
@@ -196,7 +196,7 @@ describe('A Valid', () => {
 
   it('when fail, get should be undefined', () => {
     const value = Valid(456).fail();
-    should(value.get()).be.equal(undefined);
+    should(value.fold()).be.equal(undefined);
   });
 
   it('when ap should be false', () => {

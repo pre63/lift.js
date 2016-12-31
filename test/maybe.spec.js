@@ -9,7 +9,7 @@ describe('A Maybe', () => {
 
   describe('with a value', () => {
     it('will be transformed by a map', () =>
-      should(helloBill.map(value => value.length).get()).equal(10));
+      should(helloBill.map(value => value.length).fold()).equal(10));
 
     it('will be will true for is()', () =>
       should(helloBill.is()).be.true());
@@ -28,24 +28,24 @@ describe('A Maybe', () => {
 
     it('will be transformed by a bind', () =>
       should(helloBill.bind(() => Maybe('Hello'))
-        .get())
+        .fold())
         .equal('Hello'));
 
     it('will be transformed by a map', () =>
       should(helloBill.map(() => 'Hello')
-        .get())
+        .fold())
         .equal('Hello'));
 
-    it('will be transformed by a c', () =>
-      should(helloBill.c(() => Maybe('Hello'))
-        .get())
+    it('will be transformed by a chain', () =>
+      should(helloBill.chain(() => Maybe('Hello'))
+        .fold())
         .equal('Hello'));
 
     it('will be transformed to a none on bind that returns none', () => {
       should(helloBill.bind(() => Maybe()))
         .containEql(Maybe());
 
-      should(helloBill.c(() => Maybe()))
+      should(helloBill.chain(() => Maybe()))
         .containEql(Maybe());
     });
 
@@ -55,7 +55,7 @@ describe('A Maybe', () => {
     });
 
     it('will return the first monad on else', () =>
-      should(helloBill.else(nothing).get()).equal('Hello Bill'));
+      should(helloBill.else(nothing).fold()).equal('Hello Bill'));
   });
 
   describe('without a value', () => {
@@ -71,7 +71,7 @@ describe('A Maybe', () => {
       should(nothing.bind(() => Maybe()))
         .containEql(Maybe());
 
-      should(nothing.c(() => Maybe()))
+      should(nothing.chain(() => Maybe()))
         .containEql(Maybe());
     });
 
@@ -87,19 +87,19 @@ describe('A Maybe', () => {
       should(nothing.or('yep')).equal('yep'));
 
     it('will return the supplied monad on else', () =>
-      should(nothing.else(helloBill).get()).equal('Hello Bill'));
+      should(nothing.else(helloBill).fold()).equal('Hello Bill'));
   });
 
   describe('complies with FantasyLand spec for', () => {
     it("'of'", () =>
       should(Maybe().of('hello')
-        .get())
+        .fold())
         .equal('hello'));
 
     it("'chain'", () => {
       should(Maybe('a').of('hello')
         .chain(a => Maybe().of(`${a} world`))
-        .get()).equal('hello world');
+        .fold()).equal('hello world');
 
       should(Maybe()
         .chain(a => Maybe().of(`${a} world`)))

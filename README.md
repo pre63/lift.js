@@ -171,7 +171,7 @@ const maybeWithoutValue = Maybe(null)
 // Maybe[]
 ```
 
-### isNothing, alias: n
+### isNothing
 ```
 Maybe[A].isNothing[] : boolean
 ```
@@ -183,7 +183,7 @@ const value = Maybe(5).n();
 // false
 ```
 
-### is, alias: i
+### is
 ```
 Maybe[A].is[] : boolean
 ```
@@ -195,7 +195,7 @@ const value = Maybe(5).i();
 // true
 ```
 
-### or, alias: o
+### or
 ```
 Maybe[A].or[B] : A or B
 ```
@@ -204,7 +204,7 @@ const maybeWithValue = Maybe().or(15);
 // 15
 ```
 
-### else, alias; e
+### else
 ```
 Maybe[A].else[Monad[B]] : Maybe[A] or Monad[B]
 ```

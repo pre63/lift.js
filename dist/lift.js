@@ -42,21 +42,21 @@ var Monad = exports.Monad = function Monad(modifier) {
       var m = run(value, idFunction);
       return m && m.is_monad ? m : unit(m);
     };
-    monad.get = monad.g = function () {
+    monad.fold = function () {
       return value;
     };
-    monad.chain = monad.c = monad.bind;
-    monad.map = monad.m = function (func) {
+    monad.chain = monad.bind;
+    monad.map = function (func) {
       return unit(func(value));
     };
-    monad.join = monad.j = function () {
+    monad.join = function () {
       return monad.bind(idFunction);
     };
     monad.toMaybe = function () {
       return Maybe(value);
     };
-    monad.run = monad.r = function (func) {
-      run(value, func);return monad;
+    monad.run = function (func) {
+      return run(value, func), monad;
     };
 
     if (isFunction(modifier)) {
@@ -105,13 +105,13 @@ var Maybe = exports.Maybe = Monad(function (monad, value) {
   monad.isNothing = monad.n = function () {
     return valueIsNone;
   };
-  monad.is = monad.i = function () {
+  monad.is = function () {
     return !valueIsNone;
   };
-  monad.or = monad.o = function (orValue) {
+  monad.or = function (orValue) {
     return valueIsNone ? orValue : value;
   };
-  monad.else = monad.e = function (orMonad) {
+  monad.else = function (orMonad) {
     return valueIsNone ? orMonad : monad;
   };
   monad.bind = valueIsNone ? function () {
@@ -122,7 +122,7 @@ var Maybe = exports.Maybe = Monad(function (monad, value) {
   } : monad.map;
   var run = monad.run;
   monad.run = function (func) {
-    (valueIsNone ? function () {} : run)(value, func);return monad;
+    return (valueIsNone ? function () {} : run)(value, func), monad;
   };
 });
 
